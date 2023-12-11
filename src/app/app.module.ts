@@ -52,11 +52,7 @@ import { ToastrModule } from 'ngx-toastr';
     MatListModule,
     MatCardModule,
     AppRoutingModule,
-    ToastrModule.forRoot({
-      timeOut: 10000,
-      positionClass: 'toast-top-right',
-      preventDuplicates: true,
-      }),
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

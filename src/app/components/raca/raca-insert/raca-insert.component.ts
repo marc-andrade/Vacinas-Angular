@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Observer } from 'rxjs';
 import { Raca } from 'src/app/models/Raca';
 import { RacaService } from 'src/app/services/raca.service';
 
@@ -19,19 +19,17 @@ export class RacaInsertComponent implements OnInit {
 
   constructor(
     private service: RacaService,
-    private toast: ToastrService,
-    private router: Router
+    private toast: ToastrService
   ) {}
 
   ngOnInit(): void {}
 
   create(): void {
-    this.service.create(this.raca).subscribe(
-      () => {
-        this.toast.success('Raca cadastrado com sucesso', 'Cadastro');
-        this.router.navigate(['vacinas']);
+    const observer: Observer<Raca> = {
+      next: () => {
+        this.toast.success('Raça cadastrada com sucesso', 'Cadastro');
       },
-      (ex) => {
+      error: (ex: any) => {
         if (ex.error.errors) {
           ex.error.errors.forEach((element: { message: string }) => {
             this.toast.error(element.message);
@@ -39,8 +37,13 @@ export class RacaInsertComponent implements OnInit {
         } else {
           this.toast.error(ex.error.message);
         }
+      },
+      complete: () => {
+        // Lida com a lógica após a conclusão (se necessário)
       }
-    );
+    };
+
+    this.service.create(this.raca).subscribe(observer);
   }
 
   validaCampos(): boolean {
