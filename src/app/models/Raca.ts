@@ -1,4 +1,4 @@
 export interface Raca {
-  id?: number,
+  id?: any,
   nome: string
 }

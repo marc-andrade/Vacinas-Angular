@@ -1,41 +1,56 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observer } from 'rxjs';
 import { Raca } from 'src/app/models/Raca';
 import { RacaService } from 'src/app/services/raca.service';
 
 @Component({
-  selector: 'app-raca-insert',
-  templateUrl: './raca-insert.component.html',
-  styleUrls: ['./raca-insert.component.css'],
+  selector: 'app-raca-update',
+  templateUrl: './raca-update.component.html',
+  styleUrls: ['./raca-update.component.css']
 })
-export class RacaInsertComponent implements OnInit {
+export class RacaUpdateComponent {
+
   racaForm: FormGroup;
 
-  constructor(
+  raca: Raca = {
+    id: '',
+    nome: ''
+  }
+
+  constructor(private service: RacaService,
     private formBuilder: FormBuilder,
-    private service: RacaService,
-    private toast: ToastrService
-  ) {
-    this.racaForm = this.formBuilder.group({
-      nome: ['', [Validators.required, Validators.minLength(3)]],
+    private toast: ToastrService,
+    private router: Router,
+    private route: ActivatedRoute) {
+      this.racaForm = this.formBuilder.group({
+        nome: ['', [Validators.required, Validators.minLength(3)]],
+      });
+     }
+
+  ngOnInit(): void {
+    this.raca.id = this.route.snapshot.paramMap.get('id');
+    this.findById();
+  }
+
+
+  findById(): void {
+    this.service.findById(this.raca.id).subscribe(resposta => {
+      this.raca = resposta;
     });
   }
 
-  ngOnInit(): void {
-
-  }
-
-  create(): void {
+  update(): void {
     if (this.racaForm.valid) {
-      const newRaca: Raca = {
+      const updateRaca: Raca = {
         nome: this.racaForm.value.nome,
       };
 
       const observer: Observer<Raca> = {
         next: () => {
-          this.toast.success('Raça cadastrada com sucesso', 'Cadastro');
+          this.toast.success('Raça atualizada com sucesso', 'Update');
           this.resetForm();
         },
         error: (ex: any) => {
@@ -52,7 +67,7 @@ export class RacaInsertComponent implements OnInit {
         }
       };
 
-      this.service.create(newRaca).subscribe(observer);
+      this.service.create(updateRaca).subscribe(observer);
     }
   }
 
@@ -69,4 +84,5 @@ export class RacaInsertComponent implements OnInit {
   validaCampos(): boolean {
     return this.nome ? this.nome.valid : false;
   }
+
 }

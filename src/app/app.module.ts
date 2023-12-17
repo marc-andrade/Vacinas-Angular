@@ -25,11 +25,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { ToastrModule } from 'ngx-toastr';
+import { RacaUpdateComponent } from './components/raca/raca-update/raca-update.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RacaInsertComponent
+    RacaInsertComponent,
+    RacaUpdateComponent
   ],
   imports: [
     BrowserModule,
