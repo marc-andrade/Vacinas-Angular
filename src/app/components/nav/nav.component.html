@@ -1,0 +1,31 @@
+<mat-drawer-container class="container" autosize>
+  <mat-drawer #drawer class="sidenav" mode="side">
+
+    <mat-nav-list class="nav-list">
+      <a mat-list-item routerLink="racas">
+        <i class="material-icons">pets</i>
+        Racas
+      </a>
+      <a mat-list-item routerLink="animais">
+        <i class="material-icons">pets</i>
+        Animais
+      </a>
+      <a mat-list-item routerLink="vacinas">
+        <i class="material-icons">pets</i>
+        Vacinas
+      </a>
+      <a mat-list-item href="https://github.com/marc-andrade/Vacinas-Angular" target="_blank">
+          <i class="material-icons">code</i>
+          GitHub
+      </a>
+    </mat-nav-list>
+  </mat-drawer>
+
+  <div class="sidenav-content">
+    <button class="menu mat-elevation-z8" (click)="drawer.toggle()" mat-icon-button>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <router-outlet></router-outlet>
+  </div>
+
+</mat-drawer-container>

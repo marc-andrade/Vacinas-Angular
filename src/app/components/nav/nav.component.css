@@ -1,0 +1,15 @@
+.container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 13rem;
+}
+
+.sidenav i {
+  margin-right: .6rem;
+}
+
+.menu {
+  margin: 1rem 0 0 1rem;
+}

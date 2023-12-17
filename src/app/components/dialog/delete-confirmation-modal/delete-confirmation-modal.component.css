@@ -1,0 +1,21 @@
+.confirmation-modal {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-modal h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.confirmation-modal p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.confirmation-modal button {
+  margin-right: 10px;
+}

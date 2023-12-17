@@ -12,12 +12,11 @@ export class RacaService {
   constructor(private http: HttpClient) { }
 
   findById(id:any): Observable<Raca>{
-    console.log(id)
     return this.http.get<Raca>(`${API_CONFIG.baseUrl}/racas/${id}`);
   }
 
-  findAll(): Observable<Raca> {
-    return this.http.get<Raca>(`${API_CONFIG.baseUrl}/racas`);
+  findAll(): Observable<Raca[]> {
+    return this.http.get<Raca[]>(`${API_CONFIG.baseUrl}/racas`);
   }
 
   create(raca: Raca): Observable<Raca> {

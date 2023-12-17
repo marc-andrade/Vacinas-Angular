@@ -39,12 +39,21 @@ export class RacaUpdateComponent {
   findById(): void {
     this.service.findById(this.raca.id).subscribe(resposta => {
       this.raca = resposta;
+      this.populateForm();
+    });
+  }
+
+  populateForm(): void {
+    // Atualiza os valores do formulário com os dados da raça
+    this.racaForm.patchValue({
+      nome: this.raca.nome,
     });
   }
 
   update(): void {
     if (this.racaForm.valid) {
       const updateRaca: Raca = {
+        id: this.raca.id,
         nome: this.racaForm.value.nome,
       };
 
@@ -52,6 +61,7 @@ export class RacaUpdateComponent {
         next: () => {
           this.toast.success('Raça atualizada com sucesso', 'Update');
           this.resetForm();
+          this.router.navigate(['racas'])
         },
         error: (ex: any) => {
           if (ex.error.errors) {
@@ -63,11 +73,11 @@ export class RacaUpdateComponent {
           }
         },
         complete: () => {
-          // Lida com a lógica após a conclusão (se necessário)
+
         }
       };
 
-      this.service.create(updateRaca).subscribe(observer);
+      this.service.update(updateRaca).subscribe(observer);
     }
   }
 
@@ -82,7 +92,7 @@ export class RacaUpdateComponent {
   }
 
   validaCampos(): boolean {
-    return this.nome ? this.nome.valid : false;
+    return this.nome.valid;
   }
 
 }

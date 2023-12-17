@@ -24,14 +24,23 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ToastrModule } from 'ngx-toastr';
 import { RacaUpdateComponent } from './components/raca/raca-update/raca-update.component';
+import { RacaListComponent } from './components/raca/raca-list/raca-list.component';
+import { DeleteConfirmationModalComponent } from './components/dialog/delete-confirmation-modal/delete-confirmation-modal.component';
+import { NavComponent } from './components/nav/nav.component';
+import { AnimalInsertComponent } from './components/animal/animal-insert/animal-insert.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RacaInsertComponent,
-    RacaUpdateComponent
+    RacaUpdateComponent,
+    RacaListComponent,
+    DeleteConfirmationModalComponent,
+    NavComponent,
+    AnimalInsertComponent
   ],
   imports: [
     BrowserModule,
@@ -53,6 +62,7 @@ import { RacaUpdateComponent } from './components/raca/raca-update/raca-update.c
     MatIconModule,
     MatListModule,
     MatCardModule,
+    MatDialogModule,
     AppRoutingModule,
     ToastrModule.forRoot()
   ],

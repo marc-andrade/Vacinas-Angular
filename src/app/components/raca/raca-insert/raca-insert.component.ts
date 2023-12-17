@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observer } from 'rxjs';
 import { Raca } from 'src/app/models/Raca';
@@ -16,7 +17,8 @@ export class RacaInsertComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private service: RacaService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private router: Router,
   ) {
     this.racaForm = this.formBuilder.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],
@@ -37,6 +39,7 @@ export class RacaInsertComponent implements OnInit {
         next: () => {
           this.toast.success('Raça cadastrada com sucesso', 'Cadastro');
           this.resetForm();
+          this.router.navigate(['racas'])
         },
         error: (ex: any) => {
           if (ex.error.errors) {
@@ -67,6 +70,6 @@ export class RacaInsertComponent implements OnInit {
   }
 
   validaCampos(): boolean {
-    return this.nome ? this.nome.valid : false;
+    return this.nome.valid;
   }
 }
