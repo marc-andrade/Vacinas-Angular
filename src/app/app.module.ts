@@ -33,6 +33,8 @@ import { RacaListComponent } from './components/raca/raca-list/raca-list.compone
 import { DeleteConfirmationModalComponent } from './components/dialog/delete-confirmation-modal/delete-confirmation-modal.component';
 import { NavComponent } from './components/nav/nav.component';
 import { AnimalInsertComponent } from './components/animal/animal-insert/animal-insert.component';
+import { AnimalUpdateComponent } from './components/animal/animal-update/animal-update.component';
+import { AnimalListComponent } from './components/animal/animal-list/animal-list.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { AnimalInsertComponent } from './components/animal/animal-insert/animal-
     RacaListComponent,
     DeleteConfirmationModalComponent,
     NavComponent,
-    AnimalInsertComponent
+    AnimalInsertComponent,
+    AnimalUpdateComponent,
+    AnimalListComponent
   ],
   imports: [
     BrowserModule,

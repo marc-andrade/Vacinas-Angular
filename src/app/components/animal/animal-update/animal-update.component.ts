@@ -1,15 +1,15 @@
-import { RacaService } from 'src/app/services/raca.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { Observer } from 'rxjs';
-import { Animal } from 'src/app/models/Animal';
-import { AnimalService } from 'src/app/services/animal.service';
-import { Raca } from 'src/app/models/Raca';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as _moment from 'moment';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Raca } from 'src/app/models/Raca';
+import { AnimalService } from 'src/app/services/animal.service';
+import { RacaService } from 'src/app/services/raca.service';
+import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Animal } from 'src/app/models/Animal';
+import { Observer } from 'rxjs';
 
 const moment = _moment;
 
@@ -26,10 +26,10 @@ export const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-animal-insert',
-  templateUrl: './animal-insert.component.html',
-  styleUrls: ['./animal-insert.component.css'],
-   providers: [
+  selector: 'app-animal-update',
+  templateUrl: './animal-update.component.html',
+  styleUrls: ['./animal-update.component.css'],
+  providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, // Use the desired locale here
     {
       provide: MAT_DATE_FORMATS,
@@ -38,9 +38,19 @@ export const MY_FORMATS = {
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
   ],
 })
-export class AnimalInsertComponent implements OnInit {
+export class AnimalUpdateComponent implements OnInit {
 
   animalForm: FormGroup;
+
+  animal: Animal = {
+    id: '',
+    nome: '',
+    dono: '',
+    telefone: '',
+    tipo: '',
+    nascimento: '',
+    raca: undefined
+  };
 
   racas: Raca[] = [];
 
@@ -50,6 +60,7 @@ export class AnimalInsertComponent implements OnInit {
     private racaService: RacaService,
     private toast: ToastrService,
     private router: Router,
+    private route: ActivatedRoute
   ) {
     this.animalForm = this.formBuilder.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],
@@ -62,7 +73,16 @@ export class AnimalInsertComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.animal.id = this.route.snapshot.paramMap.get('id');
     this.findAllRacas();
+    this.findById();
+  }
+
+  findById(): void {
+    this.service.findById(this.animal.id).subscribe(resposta => {
+      this.animal = resposta;
+      this.populateForm();
+    });
   }
 
   findAllRacas() {
@@ -71,22 +91,27 @@ export class AnimalInsertComponent implements OnInit {
     });
   }
 
-  create(): void {
-    if (this.animalForm.valid) {
-      const newAnimal: Animal = {
-        nome: this.animalForm.value.nome,
-        dono: this.animalForm.value.dono,
-        telefone: this.animalForm.value.telefone,
-        tipo: this.animalForm.value.tipo,
-        nascimento: this.animalForm.value.nascimento,
-        raca: this.animalForm.value.raca
-      };
+  populateForm(): void {
+    this.animalForm.patchValue({
+      nome: this.animal.nome,
+      dono: this.animal.dono,
+      telefone: this.animal.telefone,
+      tipo: this.animal.tipo,
+      nascimento: this.animal.nascimento,
+      raca: this.animal.raca
+    });
+  }
 
-      const observer: Observer<Animal> = {
+  update(): void {
+    if (this.animalForm.valid) {
+
+      const updateRaca: Animal = this.animalForm.value;
+
+      const observer: Observer<Raca> = {
         next: () => {
-          this.toast.success('Animal cadastrado com sucesso', 'Cadastro');
+          this.toast.success('Raça atualizada com sucesso', 'Update');
           this.resetForm();
-          this.router.navigate([''])
+          this.router.navigate(['racas'])
         },
         error: (ex: any) => {
           if (ex.error.errors) {
@@ -98,10 +123,11 @@ export class AnimalInsertComponent implements OnInit {
           }
         },
         complete: () => {
+
         }
       };
 
-      this.service.create(newAnimal).subscribe(observer);
+      this.service.update(updateRaca).subscribe(observer);
     }
   }
 
