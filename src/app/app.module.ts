@@ -25,6 +25,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 import { ToastrModule } from 'ngx-toastr';
 import { RacaUpdateComponent } from './components/raca/raca-update/raca-update.component';
 import { RacaListComponent } from './components/raca/raca-list/raca-list.component';
@@ -48,6 +50,8 @@ import { AnimalInsertComponent } from './components/animal/animal-insert/animal-
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatFormFieldModule,
     MatPaginatorModule,
     MatCheckboxModule,

@@ -7,11 +7,36 @@ import { Observer } from 'rxjs';
 import { Animal } from 'src/app/models/Animal';
 import { AnimalService } from 'src/app/services/animal.service';
 import { Raca } from 'src/app/models/Raca';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import * as _moment from 'moment';
+
+const moment = _moment;
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'app-animal-insert',
   templateUrl: './animal-insert.component.html',
-  styleUrls: ['./animal-insert.component.css']
+  styleUrls: ['./animal-insert.component.css'],
+   providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, // Use the desired locale here
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_FORMATS,
+    },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+  ],
 })
 export class AnimalInsertComponent implements OnInit {
 

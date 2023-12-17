@@ -55,13 +55,10 @@
     </mat-form-field>
 
     <mat-form-field class="fullWidth" appearance="fill">
-      <mat-label for="nascimentoField">Data de Nascimento</mat-label>
-      <input
-        formControlName="nascimento"
-        matInput
-        maxlength="50"
-        id="nascimentoField"
-      >
+      <mat-label>Data de Nascimento</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="nascimento">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
     <button (click)="create()" [disabled]="!validaCampos()" class="fullWidth mat-elevation-z4" mat-flat-button color="primary">Cadastrar</button>

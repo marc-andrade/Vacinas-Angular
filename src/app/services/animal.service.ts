@@ -20,6 +20,7 @@ export class AnimalService {
   }
 
   create(animal: Animal): Observable<Animal> {
+    console.log(animal)
     return this.http.post<Animal>(`${API_CONFIG.baseUrl}/animais`, animal);
   }
 
