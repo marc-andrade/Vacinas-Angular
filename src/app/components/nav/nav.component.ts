@@ -11,7 +11,7 @@ export class NavComponent {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.router.navigate(['vacinas/create'])
+    this.router.navigate(['vacinas'])
   }
 
 }

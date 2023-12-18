@@ -1,7 +1,7 @@
 import { AnimalService } from 'src/app/services/animal.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Observer, map, startWith } from 'rxjs';
 import { Vacina } from 'src/app/models/Vacina';
@@ -28,9 +28,9 @@ export const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-vacinas-insert',
-  templateUrl: './vacinas-insert.component.html',
-  styleUrls: ['./vacinas-insert.component.css'],
+  selector: 'app-vacinas-update',
+  templateUrl: './vacinas-update.component.html',
+  styleUrls: ['./vacinas-update.component.css'],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }, // Use the desired locale here
     {
@@ -44,19 +44,27 @@ export const MY_FORMATS = {
     },
   ],
 })
-export class VacinasInsertComponent implements OnInit{
+export class VacinasUpdateComponent implements OnInit{
 
   vacinaForm: FormGroup;
   animais: Animal[] = [];
   myControl = new FormControl('');
   filteredOptions: Observable<Animal[]>;
 
+  vacina: Vacina = {
+    id: '',
+    nome: '',
+    data: '',
+    animal: undefined
+  }
+
   constructor(
     private formBuilder: FormBuilder,
     private service: VacinasService,
     private toast: ToastrService,
     private router: Router,
-    private animalService: AnimalService
+    private animalService: AnimalService,
+    private route: ActivatedRoute
   ) {
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -70,7 +78,25 @@ export class VacinasInsertComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.vacina.id = this.route.snapshot.paramMap.get('id');
     this.findAllAnimais();
+    this.findById();
+  }
+
+  findById(): void {
+    this.service.findById(this.vacina.id).subscribe(resposta => {
+      this.vacina = resposta;
+      this.populateForm();
+      this.selectedAnimal({ option: { value: this.vacina.animal } });
+    });
+  }
+
+  populateForm(): void {
+    this.vacinaForm.patchValue({
+      nome: this.vacina.nome,
+      data: this.vacina.data,
+      animal: this.vacina.animal
+    });
   }
 
   displayFn(subject) {
@@ -87,19 +113,19 @@ export class VacinasInsertComponent implements OnInit{
     return this.animais.filter(animal => animal.nome.toLowerCase().includes(filterValue));
   }
 
-
   findAllAnimais() {
     this.animalService.findAll().subscribe((resposta) => {
       this.animais = resposta;
     });
   }
 
-  create(): void {
-    const newVacina: Vacina = this.vacinaForm.value
+  update(): void {
+    const updateVacina: Vacina = this.vacinaForm.value
+    updateVacina.id = this.vacina.id
 
     const observer: Observer<Vacina> = {
       next: () => {
-        this.toast.success('Vacina cadastrada com sucesso', 'Cadastro');
+        this.toast.success('Vacina atualizada com sucesso', 'Atualizacao');
         this.resetForm();
         this.router.navigate(['vacinas']);
       },
@@ -115,7 +141,7 @@ export class VacinasInsertComponent implements OnInit{
       complete: () => {},
     };
 
-    this.service.create(newVacina).subscribe(observer);
+    this.service.update(updateVacina).subscribe(observer);
   }
 
   resetForm(): void {
@@ -129,5 +155,4 @@ export class VacinasInsertComponent implements OnInit{
   validaCampos(): boolean {
     return this.vacinaForm.value.nome && this.vacinaForm.value.data && this.vacinaForm.value.animal;
   }
-
 }
