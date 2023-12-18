@@ -27,7 +27,8 @@
              matInput
              [formControl]="myControl"
              [matAutocomplete]="auto">
-      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="selectedAnimal($event)"
+      [displayWith]="displayFn">
         <mat-option *ngFor="let animal of filteredOptions | async" [value]="animal">
           {{ animal.nome }}
         </mat-option>

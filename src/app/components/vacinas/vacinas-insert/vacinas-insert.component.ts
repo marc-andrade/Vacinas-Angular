@@ -72,10 +72,22 @@ export class VacinasInsertComponent {
     this.findAllAnimais();
   }
 
-  private _filter(value: string): Animal[] {
-    const filterValue = value.toLowerCase();
+  displayFn(subject) {
+    return subject ? subject.nome : undefined;
+  }
+
+  selectedAnimal(event: any) {
+    this.vacinaForm.get('animal')?.setValue(event.option.value);
+  }
+
+
+  private _filter(value: string | Animal): Animal[] {
+    const filterValue = (typeof value === 'string') ? value.toLowerCase() : value.nome.toLowerCase();
     return this.animais.filter(animal => animal.nome.toLowerCase().includes(filterValue));
   }
+
+
+
 
   findAllAnimais() {
     this.animalService.findAll().subscribe((resposta) => {
@@ -116,11 +128,7 @@ export class VacinasInsertComponent {
   }
 
   validaCampos(): boolean {
-    const nomeValido = this.vacinaForm.get('nome')?.valid;
-    const dataValida = this.vacinaForm.get('data')?.valid;
-    const animalSelecionado = this.vacinaForm.get('animal')?.value !== null;
-
-    return nomeValido && dataValida && animalSelecionado;
+    return this.vacinaForm.value.nome && this.vacinaForm.value.data && this.vacinaForm.value.animal;
   }
 
 }
