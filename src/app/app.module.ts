@@ -27,6 +27,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import {AsyncPipe} from '@angular/common';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { ToastrModule } from 'ngx-toastr';
 import { RacaUpdateComponent } from './components/raca/raca-update/raca-update.component';
 import { RacaListComponent } from './components/raca/raca-list/raca-list.component';
@@ -35,6 +37,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { AnimalInsertComponent } from './components/animal/animal-insert/animal-insert.component';
 import { AnimalUpdateComponent } from './components/animal/animal-update/animal-update.component';
 import { AnimalListComponent } from './components/animal/animal-list/animal-list.component';
+import { VacinasInsertComponent } from './components/vacinas/vacinas-insert/vacinas-insert.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,8 @@ import { AnimalListComponent } from './components/animal/animal-list/animal-list
     NavComponent,
     AnimalInsertComponent,
     AnimalUpdateComponent,
-    AnimalListComponent
+    AnimalListComponent,
+    VacinasInsertComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +75,8 @@ import { AnimalListComponent } from './components/animal/animal-list/animal-list
     MatListModule,
     MatCardModule,
     MatDialogModule,
+    MatAutocompleteModule,
+    AsyncPipe,
     AppRoutingModule,
     ToastrModule.forRoot()
   ],

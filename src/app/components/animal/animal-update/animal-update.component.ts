@@ -49,7 +49,7 @@ export class AnimalUpdateComponent implements OnInit {
     telefone: '',
     tipo: '',
     nascimento: '',
-    raca: ''
+    raca: undefined
   };
 
   racas: Raca[] = [];
@@ -105,11 +105,19 @@ export class AnimalUpdateComponent implements OnInit {
   update(): void {
     if (this.animalForm.valid) {
 
-      const updateRaca: Animal = this.animalForm.value;
+      const updateAnimal: Animal = {
+        id: this.animal.id,
+        nome: this.animalForm.value.nome,
+        dono: this.animalForm.value.dono,
+        telefone: this.animalForm.value.telefone,
+        tipo: this.animalForm.value.tipo,
+        nascimento: this.animalForm.value.nascimento,
+        raca: this.animalForm.value.raca
+      }
 
       const observer: Observer<Raca> = {
         next: () => {
-          this.toast.success('Raça atualizada com sucesso', 'Update');
+          this.toast.success('Animal atualizada com sucesso', 'Update');
           this.resetForm();
           this.router.navigate(['animais'])
         },
@@ -127,7 +135,7 @@ export class AnimalUpdateComponent implements OnInit {
         }
       };
 
-      this.service.update(updateRaca).subscribe(observer);
+      this.service.update(updateAnimal).subscribe(observer);
     }
   }
 

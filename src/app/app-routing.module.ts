@@ -7,6 +7,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { AnimalInsertComponent } from './components/animal/animal-insert/animal-insert.component';
 import { AnimalUpdateComponent } from './components/animal/animal-update/animal-update.component';
 import { AnimalListComponent } from './components/animal/animal-list/animal-list.component';
+import { VacinasInsertComponent } from './components/vacinas/vacinas-insert/vacinas-insert.component';
 
 const routes: Routes = [
 
@@ -17,6 +18,7 @@ const routes: Routes = [
     { path: 'animais', component: AnimalListComponent},
     { path: 'animais/create', component: AnimalInsertComponent},
     { path: 'animais/update/:id', component: AnimalUpdateComponent},
+    { path: 'vacinas/create', component: VacinasInsertComponent},
   ]}
   ];
 @NgModule({

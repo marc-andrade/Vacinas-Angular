@@ -7,5 +7,5 @@ export interface Animal {
   telefone: string,
   tipo: string,
   nascimento: string,
-  raca: any
+  raca: Raca
 }
