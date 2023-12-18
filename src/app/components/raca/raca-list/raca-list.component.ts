@@ -23,7 +23,9 @@ export class RacaListComponent {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private service: RacaService, public dialog: MatDialog, private toast: ToastrService, private router: Router,) { }
+  constructor(private service: RacaService,
+    public dialog: MatDialog,
+     private toast: ToastrService) { }
 
   ngOnInit(): void {
     this.findAll();

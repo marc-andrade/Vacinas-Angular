@@ -49,7 +49,7 @@ export class AnimalUpdateComponent implements OnInit {
     telefone: '',
     tipo: '',
     nascimento: '',
-    raca: undefined
+    raca: ''
   };
 
   racas: Raca[] = [];
@@ -98,7 +98,7 @@ export class AnimalUpdateComponent implements OnInit {
       telefone: this.animal.telefone,
       tipo: this.animal.tipo,
       nascimento: this.animal.nascimento,
-      raca: this.animal.raca
+      raca: this.animal.raca?.id
     });
   }
 
@@ -111,7 +111,7 @@ export class AnimalUpdateComponent implements OnInit {
         next: () => {
           this.toast.success('Raça atualizada com sucesso', 'Update');
           this.resetForm();
-          this.router.navigate(['racas'])
+          this.router.navigate(['animais'])
         },
         error: (ex: any) => {
           if (ex.error.errors) {

@@ -86,7 +86,7 @@ export class AnimalInsertComponent implements OnInit {
         next: () => {
           this.toast.success('Animal cadastrado com sucesso', 'Cadastro');
           this.resetForm();
-          this.router.navigate([''])
+          this.router.navigate(['animais'])
         },
         error: (ex: any) => {
           if (ex.error.errors) {

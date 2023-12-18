@@ -6,6 +6,7 @@ import { RacaUpdateComponent } from './components/raca/raca-update/raca-update.c
 import { NavComponent } from './components/nav/nav.component';
 import { AnimalInsertComponent } from './components/animal/animal-insert/animal-insert.component';
 import { AnimalUpdateComponent } from './components/animal/animal-update/animal-update.component';
+import { AnimalListComponent } from './components/animal/animal-list/animal-list.component';
 
 const routes: Routes = [
 
@@ -13,6 +14,7 @@ const routes: Routes = [
     { path: 'racas', component: RacaListComponent},
     { path: 'racas/create', component: RacaInsertComponent},
     { path: 'racas/update/:id', component: RacaUpdateComponent},
+    { path: 'animais', component: AnimalListComponent},
     { path: 'animais/create', component: AnimalInsertComponent},
     { path: 'animais/update/:id', component: AnimalUpdateComponent},
   ]}
