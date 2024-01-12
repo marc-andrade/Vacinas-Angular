@@ -7,7 +7,6 @@ import { RacaService } from 'src/app/services/raca.service';
 import { ToastrService } from 'ngx-toastr';
 import { Observer } from 'rxjs';
 import { DeleteConfirmationModalComponent } from '../../dialog/delete-confirmation-modal/delete-confirmation-modal.component';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-raca-list',
