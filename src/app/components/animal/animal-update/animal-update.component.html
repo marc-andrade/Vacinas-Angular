@@ -46,12 +46,10 @@
     </mat-form-field>
     <mat-form-field class="fullWidth" appearance="fill">
       <mat-label for="tipoField">Tipo</mat-label>
-      <input
-        formControlName="tipo"
-        matInput
-        maxlength="50"
-        id="tipoField"
-      >
+      <mat-select formControlName="tipo" id="tipoField">
+        <mat-option value="Cachorro">Cachorro</mat-option>
+        <mat-option value="Gato">Gato</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field class="fullWidth" appearance="fill">

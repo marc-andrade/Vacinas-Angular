@@ -7,7 +7,7 @@ import { Vacina } from 'src/app/models/Vacina';
 import { VacinasService } from 'src/app/services/vacinas.service';
 import { DeleteConfirmationModalComponent } from '../../dialog/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Observer } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-vacinas-list',
@@ -20,7 +20,6 @@ export class VacinasListComponent {
 
   animalId: number;
 
-
   displayedColumns: string[] = ['id','nome','data','animal','acoes'];
   dataSource = new MatTableDataSource<Vacina>(this.ELEMENT_DATA);
 
@@ -29,7 +28,8 @@ export class VacinasListComponent {
   constructor(private service: VacinasService,
     public dialog: MatDialog,
     private toast: ToastrService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.animalId = +this.route.snapshot.paramMap.get('id');
@@ -91,6 +91,10 @@ export class VacinasListComponent {
       }
     };
     this.service.delete(element).subscribe(observer);
+  }
+
+  navegarParaEdicao(id: number) {
+    this.router.navigate(['vacinas/update', id]);
   }
 
 }

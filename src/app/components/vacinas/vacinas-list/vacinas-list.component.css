@@ -24,6 +24,7 @@ h1 {
 
 .edit {
   color: rgb(0, 153, 255);
+  cursor: pointer;
 }
 
 .delete {

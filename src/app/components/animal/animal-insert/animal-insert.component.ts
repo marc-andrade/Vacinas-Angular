@@ -11,8 +11,6 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as _moment from 'moment';
 
-const moment = _moment;
-
 export const MY_FORMATS = {
   parse: {
     dateInput: 'LL',
@@ -55,7 +53,7 @@ export class AnimalInsertComponent implements OnInit {
       nome: ['', [Validators.required, Validators.minLength(3)]],
       dono: ['', [Validators.required, Validators.minLength(3)]],
       telefone: ['', [Validators.required, Validators.minLength(3)]],
-      tipo: ['', [Validators.required, Validators.minLength(3)]],
+      tipo: ['', [Validators.required]],
       nascimento: ['', [Validators.required, Validators.minLength(3)]],
       raca: ['', [Validators.required]]
     });

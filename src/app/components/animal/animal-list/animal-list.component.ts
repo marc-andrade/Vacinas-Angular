@@ -67,17 +67,14 @@ export class AnimalListComponent {
         let errorMessage = 'Ocorreu um erro ao deletar o animal.';
 
         if (ex.error && ex.error.error) {
-          // Se houver uma mensagem de erro específica do backend
           errorMessage = ex.error.error;
         } else if (ex.error && ex.error.message) {
-          // Se houver uma mensagem de erro geral do backend
           errorMessage = ex.error.message;
         }
 
         this.toast.error(errorMessage, 'Erro na Deleção');
       },
       complete: () => {
-        // Alguma ação opcional quando a operação estiver completa
       }
     };
 
