@@ -4,15 +4,26 @@
   margin: auto;
 }
 
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  flex: 1;
+  min-width: 150px;
+  margin-right: 10px; /* Adjust the margin as needed */
+}
+
+button:last-child {
+  margin-right: 0; /* Remove margin for the last button */
+}
+
 table {
   width: 100%;
 }
 
 mat-form-field {
-  width: 100%;
-}
-
-button {
   width: 100%;
 }
 

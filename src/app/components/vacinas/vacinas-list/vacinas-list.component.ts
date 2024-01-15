@@ -7,6 +7,7 @@ import { Vacina } from 'src/app/models/Vacina';
 import { VacinasService } from 'src/app/services/vacinas.service';
 import { DeleteConfirmationModalComponent } from '../../dialog/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Observer } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-vacinas-list',
@@ -17,6 +18,9 @@ export class VacinasListComponent {
 
   ELEMENT_DATA: Vacina[] = [];
 
+  animalId: number;
+
+
   displayedColumns: string[] = ['id','nome','data','animal','acoes'];
   dataSource = new MatTableDataSource<Vacina>(this.ELEMENT_DATA);
 
@@ -24,10 +28,12 @@ export class VacinasListComponent {
 
   constructor(private service: VacinasService,
     public dialog: MatDialog,
-    private toast: ToastrService) { }
+    private toast: ToastrService,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.findAll();
+    this.animalId = +this.route.snapshot.paramMap.get('id');
+    this.animalId ? this.findAllByAnimalId() : this.findAll();
   }
 
   findAll() {
@@ -38,6 +44,14 @@ export class VacinasListComponent {
       this.dataSource.paginator = this.paginator;
       this.dataSource.paginator = this.paginator;
     })
+  }
+
+  findAllByAnimalId() {
+    this.service.findAllByAnimalId(this.animalId).subscribe(resposta => {
+      this.ELEMENT_DATA = resposta;
+      this.dataSource = new MatTableDataSource<Vacina>(resposta);
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   applyFilter(event: Event) {

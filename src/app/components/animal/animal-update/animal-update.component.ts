@@ -11,8 +11,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Animal } from 'src/app/models/Animal';
 import { Observer } from 'rxjs';
 
-const moment = _moment;
-
 export const MY_FORMATS = {
   parse: {
     dateInput: 'LL',

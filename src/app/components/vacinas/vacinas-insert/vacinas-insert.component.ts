@@ -101,7 +101,7 @@ export class VacinasInsertComponent implements OnInit{
       next: () => {
         this.toast.success('Vacina cadastrada com sucesso', 'Cadastro');
         this.resetForm();
-        this.router.navigate(['vacinas']);
+        this.router.navigate(['animais']);
       },
       error: (ex: any) => {
         if (ex.error.errors) {

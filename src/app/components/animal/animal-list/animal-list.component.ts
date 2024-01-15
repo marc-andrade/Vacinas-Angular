@@ -57,24 +57,31 @@ export class AnimalListComponent {
   }
 
   deleteItem(element: any) {
-
     const observer: Observer<Animal> = {
       next: () => {
         this.toast.success('Animal Deletado com sucesso', 'Delecao');
         this.findAll();
       },
       error: (ex: any) => {
-        if (ex.error.errors) {
-          ex.error.errors.forEach((element: { message: string }) => {
-            this.toast.error(element.message);
-          });
-        } else {
-          this.toast.error(ex.error.message);
+
+        let errorMessage = 'Ocorreu um erro ao deletar o animal.';
+
+        if (ex.error && ex.error.error) {
+          // Se houver uma mensagem de erro específica do backend
+          errorMessage = ex.error.error;
+        } else if (ex.error && ex.error.message) {
+          // Se houver uma mensagem de erro geral do backend
+          errorMessage = ex.error.message;
         }
+
+        this.toast.error(errorMessage, 'Erro na Deleção');
       },
       complete: () => {
+        // Alguma ação opcional quando a operação estiver completa
       }
     };
+
     this.service.delete(element).subscribe(observer);
   }
+
 }

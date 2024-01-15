@@ -19,6 +19,10 @@ export class VacinasService {
     return this.http.get<Vacina[]>(`${API_CONFIG.baseUrl}/vacinas`);
   }
 
+  findAllByAnimalId(animalId: number): Observable<Vacina[]> {
+    return this.http.get<Vacina[]>(`${API_CONFIG.baseUrl}/vacinas/animal?animalId=${animalId}`);
+  }
+
   create(vacina: Vacina): Observable<Vacina> {
     return this.http.post<Vacina>(`${API_CONFIG.baseUrl}/vacinas`, vacina);
   }

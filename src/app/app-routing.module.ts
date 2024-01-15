@@ -23,6 +23,7 @@ const routes: Routes = [
     { path: 'vacinas', component: VacinasListComponent},
     { path: 'vacinas/create', component: VacinasInsertComponent},
     { path: 'vacinas/update/:id', component: VacinasUpdateComponent},
+    { path: 'vacinas/:id', component: VacinasListComponent},
   ]}
   ];
 @NgModule({
