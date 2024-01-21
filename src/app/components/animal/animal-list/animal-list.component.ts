@@ -63,7 +63,6 @@ export class AnimalListComponent {
         this.findAll();
       },
       error: (ex: any) => {
-
         let errorMessage = 'Ocorreu um erro ao deletar o animal.';
 
         if (ex.error && ex.error.error) {
