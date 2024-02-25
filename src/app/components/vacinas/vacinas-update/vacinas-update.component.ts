@@ -63,7 +63,6 @@ export class VacinasUpdateComponent implements OnInit{
     private service: VacinasService,
     private toast: ToastrService,
     private router: Router,
-    private animalService: AnimalService,
     private route: ActivatedRoute
   ) {
     this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -73,13 +72,12 @@ export class VacinasUpdateComponent implements OnInit{
     this.vacinaForm = this.formBuilder.group({
       nome: ['', [Validators.required, Validators.minLength(3)]],
       data: ['', [Validators.required, Validators.minLength(3)]],
-      animal: ['', [Validators.required]]
+      animal: ['', []]
     });
   }
 
   ngOnInit(): void {
     this.vacina.id = this.route.snapshot.paramMap.get('id');
-    this.findAllAnimais();
     this.findById();
   }
 
@@ -87,7 +85,6 @@ export class VacinasUpdateComponent implements OnInit{
     this.service.findById(this.vacina.id).subscribe(resposta => {
       this.vacina = resposta;
       this.populateForm();
-      this.selectedAnimal({ option: { value: this.vacina.animal } });
     });
   }
 
@@ -99,24 +96,9 @@ export class VacinasUpdateComponent implements OnInit{
     });
   }
 
-  displayFn(subject) {
-    return subject ? subject.nome : undefined;
-  }
-
-  selectedAnimal(event: any) {
-    this.vacinaForm.get('animal')?.setValue(event.option.value);
-  }
-
-
   private _filter(value: string | Animal): Animal[] {
     const filterValue = (typeof value === 'string') ? value.toLowerCase() : value.nome.toLowerCase();
     return this.animais.filter(animal => animal.nome.toLowerCase().includes(filterValue));
-  }
-
-  findAllAnimais() {
-    this.animalService.findAll().subscribe((resposta) => {
-      this.animais = resposta;
-    });
   }
 
   update(): void {
@@ -127,7 +109,7 @@ export class VacinasUpdateComponent implements OnInit{
       next: () => {
         this.toast.success('Vacina atualizada com sucesso', 'Atualizacao');
         this.resetForm();
-        this.router.navigate(['vacinas']);
+        this.router.navigate(['vacinas', this.vacina.animal.id]);
       },
       error: (ex: any) => {
         if (ex.error.errors) {
@@ -153,6 +135,10 @@ export class VacinasUpdateComponent implements OnInit{
   }
 
   validaCampos(): boolean {
-    return this.vacinaForm.value.nome && this.vacinaForm.value.data && this.vacinaForm.value.animal;
+    return this.vacinaForm.value.nome && this.vacinaForm.value.data;
+  }
+
+  voltar(): void {
+    this.router.navigate(['vacinas', this.vacina.animal.id]);
   }
 }

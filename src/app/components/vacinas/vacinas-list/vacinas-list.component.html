@@ -1,54 +1,124 @@
 <div class="container">
-  <h1>Lista de Vacinas</h1>
-  <button routerLink="/animais" class="mat-elevation-z8" mat-stroked-button color="primary">Voltar para Animais</button>
+  <h1>Vacinas do Animal</h1>
+  <button
+    routerLink="/animais"
+    class="mat-elevation-z8"
+    mat-stroked-button
+    color="primary"
+  >
+    Voltar
+  </button>
+
+  <div *ngIf="animal">
+    <h2>Vacinas do Animal {{animal.nome}}</h2>
+    <mat-form-field appearance="fill">
+      <mat-label>Raca </mat-label>
+      <input matInput type="text" [value]="animal.raca !== undefined ? animal.raca.nome : ''" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Dono </mat-label>
+      <input matInput type="text" [value]="animal.dono" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Telefone </mat-label>
+      <input matInput type="text" [value]="animal.telefone" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Tipo </mat-label>
+      <input matInput type="text" [value]="animal.tipo" disabled />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Nascimento </mat-label>
+      <input matInput type="text" [value]="animal.nascimento" disabled />
+    </mat-form-field>
+  </div>
+
+  <div class="container mat-elevation-z8">
+    <form class="form" [formGroup]="vacinaForm">
+      <h1 class="fullWidth">Cadastrar Vacina</h1>
+
+      <mat-form-field class="fullWidth" appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input
+          formControlName="nome"
+          required
+          matInput
+          placeholder="Ex.. Gripe, raiva e etc..."
+          maxlength="50"
+        >
+      </mat-form-field>
+      <mat-form-field class="fullWidth" appearance="fill">
+        <mat-label>Data</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="data">
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <button (click)="create()" [disabled]="!validaCampos()" class="fullWidth mat-elevation-z4" mat-flat-button color="primary">Cadastrar</button>
+      <button routerLink="/animais" class="fullWidth mat-elevation-z4" mat-stroked-button color="warn">Cancelar</button>
+    </form>
+  </div>
 
   <mat-form-field>
-     <mat-label>Filter</mat-label>
-     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-   </mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Ex. ium"
+      #input
+    />
+  </mat-form-field>
 
-    <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource">
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Id</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
 
-          <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> Id </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-          </ng-container>
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef>Nome</th>
+        <td mat-cell *matCellDef="let element">{{ element.nome }}</td>
+      </ng-container>
 
-          <ng-container matColumnDef="nome">
-            <th mat-header-cell *matHeaderCellDef> Nome </th>
-            <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
-          </ng-container>
+      <ng-container matColumnDef="data">
+        <th mat-header-cell *matHeaderCellDef>Data</th>
+        <td mat-cell *matCellDef="let element">{{ element.data }}</td>
+      </ng-container>
 
-          <ng-container matColumnDef="data">
-            <th mat-header-cell *matHeaderCellDef> Data </th>
-            <td mat-cell *matCellDef="let element"> {{element.data}} </td>
-          </ng-container>
+      <ng-container matColumnDef="animal">
+        <th mat-header-cell *matHeaderCellDef>Animal</th>
+        <td mat-cell *matCellDef="let element">{{ element.animal.nome }}</td>
+      </ng-container>
 
-          <ng-container matColumnDef="animal">
-            <th mat-header-cell *matHeaderCellDef> Animal </th>
-            <td mat-cell *matCellDef="let element"> {{element.animal.nome}} </td>
-          </ng-container>
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let element">
+          <a routerLink="../update/{{element.id}}">
+            <i
+              class="material-icons edit"
+              >edit</i
+            >
+          </a>
+          <a>
+            <i
+              class="material-icons delete"
+              (click)="openConfirmationModal(element.id)"
+              >delete</i
+            >
+          </a>
+        </td>
+      </ng-container>
 
-          <ng-container matColumnDef="acoes">
-            <th mat-header-cell *matHeaderCellDef> Ações </th>
-            <td mat-cell *matCellDef="let element">
-              <a>
-                <i class="material-icons edit" (click)="navegarParaEdicao(element.id)">edit</i>
-              </a>
-              <a>
-                <i class="material-icons delete" (click)="openConfirmationModal(element.id)">delete</i>
-              </a>
-            </td>
-          </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                       showFirstLastButtons
-                       aria-label="Select page of periodic elements">
-        </mat-paginator>
-      </div>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </div>
 </div>
