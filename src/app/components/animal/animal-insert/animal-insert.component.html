@@ -2,9 +2,9 @@
   <form class="form" [formGroup]="animalForm">
     <h1 class="fullWidth">Cadastrar Animal</h1>
 
-    <h4>Selecione a Raca</h4>
+    <h4>Selecione a Raça</h4>
         <mat-form-field appearance="fill">
-          <mat-label for="racaField">Raca</mat-label>
+          <mat-label for="racaField">Raça</mat-label>
           <mat-select id="racaField"  formControlName="raca" name="raca">
             <mat-option *ngFor="let raca of racas" [value]="raca">
               {{raca.nome}}

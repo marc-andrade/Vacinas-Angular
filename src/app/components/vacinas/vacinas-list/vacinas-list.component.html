@@ -12,7 +12,7 @@
   <div *ngIf="animal">
     <h2>Vacinas do Animal {{animal.nome}}</h2>
     <mat-form-field appearance="fill">
-      <mat-label>Raca </mat-label>
+      <mat-label>Raça </mat-label>
       <input matInput type="text" [value]="animal.raca !== undefined ? animal.raca.nome : ''" disabled />
     </mat-form-field>
     <mat-form-field appearance="fill">
